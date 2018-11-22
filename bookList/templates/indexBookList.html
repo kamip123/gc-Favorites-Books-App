@@ -1,0 +1,13 @@
+'{% extends 'bookList.html' %}
+
+{% block pokazKsiazki %}
+		<hr>
+    {% for ksiazka in bookList %}
+    	<h2><span id="rowName">Nazwa ksiązki: </span><span id="rowConName">{{ ksiazka.name }}</span></h2>
+    	<h2><span id="rowName">Autor: </span><span id="rowConName">{{ ksiazka.author }}</span></h2>
+    	<h2><span id="rowName">Cena: </span><span id="rowConName">{{ ksiazka.cena }}</span></h2>
+    	<img height="250" width="150"src='https://storage.googleapis.com/solwit-pjatk-arc-2018-gr1.appspot.com/{{ ksiazka.bookCover }}' alt="Book Cover"/>
+    	<button onclick='dodajDoUlubionych("{{ ksiazka.id }}");'>Dodaj do ulubionych</button>
+    	<hr>
+    {% endfor %}
+{% endblock %}

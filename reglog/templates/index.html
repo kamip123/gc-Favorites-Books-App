@@ -1,0 +1,64 @@
+{% extends 'regLogPanel.html' %}
+
+{% block registerPanel %}
+    <div class="col-0 col-sm-6 registerPanelSoldier"></div>
+    <div class="col-12 col-sm-6">
+        <h1>Register</h1>
+        <hr>
+        {% if loginForm.errors %}
+            <p>{{form.errors}}</p>
+        {% endif %}
+        <form class="site-from" action="" method="post" >
+            {% csrf_token %}
+            <p>Username:</p>
+            <p>{{ form.username.errors }}</p>
+            <p>{{ form.username }}</p>
+
+            <p>Password:</p>
+            <p>{{ form.password1.errors }}</p>
+            <p>{{ form.password1 }}</p>
+
+            <p>Repeat Password:</p>
+            <p>{{ form.password2.errors }}</p>
+            <p>{{ form.password2 }}</p>
+
+            <p>Email:</p>
+            <p>{{ form.email.errors }}</p>
+            <p>{{ form.email }}</p>
+
+            <input type="submit" value="Signup" name="SignUpForm">
+        </form>
+    </div>
+{% endblock %}
+
+{% block loginPanel %}
+    <div class="col-12">
+        <h1>Login</h1>
+        <hr>
+        {% if loginForm.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+        {% endif %}
+        <form class="site-from" action="" method="post" >
+            {% csrf_token %}
+            <p>User name:</p>
+            <p>{{ loginForm.username }}</p>
+            <p>Password:</p>
+            <p>{{ loginForm.password }}</p>
+            <input type="submit" value="Login" name="LogInForm">
+        </form>
+    </div>
+{% endblock %}
+
+{% block logOutPanel %}
+
+    <div class="col-12">
+        <h1>Welcome {{ user.username }}</h1>
+    </div>
+    <div class="col-12">
+        <form class="logout-link" action="" method="post">
+            {% csrf_token %}
+            <button type="submit" name="LogOutForm">Logout</button>
+            
+        </form>
+    </div>
+{% endblock %}
