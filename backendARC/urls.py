@@ -28,10 +28,9 @@ urlpatterns = [
     path('profil/', include('userProfil.urls')),
     path('bookList/', include('bookList.urls')),
     path('api/', include(router.urls)),
-    path('glowna/', include('reglog.urls')),
+    path('', include('reglog.urls')),
     #tutaj dodaj adresy ktore chcesz np:
     #path('adres/', TemplateView.as_view(template_name='jakasnazwa.html')),
-    url(r'^$', TemplateView.as_view(template_name='indexVue.html')),
 ]
 
 if settings.DEBUG:

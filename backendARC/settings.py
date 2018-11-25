@@ -92,12 +92,36 @@ WSGI_APPLICATION = 'backendARC.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+import pymysql  # noqa: 402
+pymysql.install_as_MySQLdb()
+if os.getenv('GAE_APPLICATION', None):
+	DATABASES = {
+	    'default': {
+	        'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/solwit-pjatk-arc-2018-gr1:europe-west1:test1',
+            'USER': 'root',
+            'PASSWORD': 'root',
+            'NAME': 'test11',
+	    }
+	}
+else:
+    # Running locally so connect to either a local MySQL instance or connect to
+    # Cloud SQL via the proxy. To start the proxy via command line:
+    #
+    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+    #
+    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+            'NAME': 'test11',
+            'USER': 'root',
+            'PASSWORD': 'root',
+        }
     }
-}
+# [END db_setup]
 
 
 # Password validation
@@ -141,7 +165,7 @@ EMAIL_PORT = 587
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 ALLOWED_HOSTS = ['*']
-
+#CSRF_COOKIE_NAME = "XSRF-TOKEN"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -150,12 +174,13 @@ ALLOWED_HOSTS = ['*']
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-  os.path.join(BASE_DIR, 'dist/static'),
-]
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = 'https://console.cloud.google.com/storage/solwit-pjatk-arc-2018-gr1.appspot.com'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'solwit-pjatk-arc-2018-gr1.appspot.com'
+
 
 
 
