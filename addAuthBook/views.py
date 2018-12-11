@@ -4,8 +4,8 @@ from .forms import AuthorForm, BookForm
 
 
 def addthings(request):
-	from google.cloud import storage
-	storage_client = storage.Client()
+
+	
 	formAuthor = AuthorForm()
 	formBook = BookForm()
 	if request.method == 'POST':	
