@@ -1,7 +1,6 @@
 {% extends 'regLogPanel.html' %}
 
 {% block registerPanel %}
-    <div class="col-0 col-sm-6 registerPanelSoldier"></div>
     <div class="col-12 col-sm-6">
         <h1>Register</h1>
         <hr>
@@ -28,12 +27,14 @@
 
             <input type="submit" value="Signup" name="SignUpForm">
         </form>
+		<p><strong>Or</strong></p>
+		<p><a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br></p>
         <p><a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a></p>
     </div>
 {% endblock %}
 
 {% block loginPanel %}
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>Login</h1>
         <hr>
         {% if loginForm.errors %}
@@ -41,7 +42,7 @@
         {% endif %}
         <form class="site-from" action="" method="post" >
             {% csrf_token %}
-            <p>User name:</p>
+            <p>Username:</p>
             <p>{{ loginForm.username }}</p>
             <p>Password:</p>
             <p>{{ loginForm.password }}</p>
@@ -52,10 +53,10 @@
 
 {% block logOutPanel %}
 
-    <div class="col-12">
+    <div class="col-lg-12">
         <h1>Welcome {{ user.username }}</h1>
     </div>
-    <div class="col-12">
+    <div class="col-lg-12">
         <form class="logout-link" action="" method="post">
             {% csrf_token %}
             <button type="submit" name="LogOutForm">Logout</button>

@@ -1,1 +1,10 @@
-body{ background-color:#5e9bff;}
+body{ background-color:lightgrey;}
+
+.rowName {
+    font-size: 30px;
+    color:#875656;
+}
+
+.rowConName {
+    font-size: 25px;
+}
