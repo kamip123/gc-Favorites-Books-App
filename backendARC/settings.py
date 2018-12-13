@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'userProfil',
     'reglog',
     'bookList',
-    'corsheaders',
+    'weather',
     'rest_framework',
 ]
 

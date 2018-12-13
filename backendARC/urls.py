@@ -29,6 +29,7 @@ urlpatterns = [
     path('bookList/', include('bookList.urls')),
     path('api/', include(router.urls)),
     path('', include('reglog.urls')),
+    path('weather/', include('weather.urls')),
     #tutaj dodaj adresy ktore chcesz np:
     #path('adres/', TemplateView.as_view(template_name='jakasnazwa.html')),
 ]
