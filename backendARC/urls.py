@@ -22,6 +22,10 @@ from django.conf import settings
 from .routers import router
 from django.views.generic import TemplateView
 
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = 'home'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dodaj/', include('addAuthBook.urls')),
@@ -30,6 +34,8 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('', include('reglog.urls')),
     path('weather/', include('weather.urls')),
+    path('scheduleTasks/', include('scheduleTasks.urls')),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
     #tutaj dodaj adresy ktore chcesz np:
     #path('adres/', TemplateView.as_view(template_name='jakasnazwa.html')),
 ]

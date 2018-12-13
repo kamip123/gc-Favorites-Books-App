@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.http import HttpResponse
-# Create your views here.
+
 
 def activate(request, uidb64, token):
     try:

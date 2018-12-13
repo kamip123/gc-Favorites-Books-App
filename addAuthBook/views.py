@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from .forms import AuthorForm, BookForm
+from django.contrib.auth.decorators import login_required
+from reglog.views import reg_log_main
 
 
+@login_required(login_url=reg_log_main)
 def addthings(request):
-
-	
 	formAuthor = AuthorForm()
 	formBook = BookForm()
 	if request.method == 'POST':	

@@ -1,0 +1,4 @@
+cron:
+- description: "Send ad emails"
+  url: /scheduleTasks/emailAd/
+  schedule: every 1 minutes

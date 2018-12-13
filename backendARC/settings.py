@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'bookList',
     'weather',
     'rest_framework',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -51,7 +52,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 ROOT_URLCONF = 'backendARC.urls'
 
@@ -66,6 +76,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -76,12 +88,35 @@ WSGI_APPLICATION = 'backendARC.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+import pymysql  # noqa: 402
+pymysql.install_as_MySQLdb()
+if os.getenv('GAE_APPLICATION', None):
+	DATABASES = {
+	    'default': {
+	        'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/solwit-pjatk-arc-2018-gr1:europe-west1:test1',
+            'USER': 'root',
+            'PASSWORD': 'root',
+            'NAME': 'bookshelf',
+	    }
+	}
+else:
+    # Running locally so connect to either a local MySQL instance or connect to
+    # Cloud SQL via the proxy. To start the proxy via command line:
+    #
+    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+    #
+    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+            'NAME': 'bookshelf',
+            'USER': 'root',
+            'PASSWORD': 'root',
+        }
     }
-}
 
 
 # Password validation
@@ -132,13 +167,14 @@ ALLOWED_HOSTS = ['*']
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
-#MEDIA_ROOT = 'https://console.cloud.google.com/storage/solwit-pjatk-arc-2018-gr1.appspot.com'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = 'https://console.cloud.google.com/storage/solwit-pjatk-arc-2018-gr1.appspot.com'
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-#DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-#GS_BUCKET_NAME = 'solwit-pjatk-arc-2018-gr1.appspot.com'
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'solwit-pjatk-arc-2018-gr1.appspot.com'
 
-
+SOCIAL_AUTH_FACEBOOK_KEY = '2261094383941531'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '50767d778053d85f5cf80574a2f3a8dd'  # App Secret
 
 
